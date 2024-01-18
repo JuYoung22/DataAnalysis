@@ -24,7 +24,8 @@ def connect(db_params):
     create_table_query = """
         CREATE TABLE IF NOT EXISTS newsData (
             id SERIAL PRIMARY KEY,
-            data VARCHAR(255),
+            date VARCHAR(255),
+            category VARCHAR(255),
             press VARCHAR(255),
             title VARCHAR(255),
             document VARCHAR(255),
