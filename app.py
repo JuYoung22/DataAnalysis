@@ -10,7 +10,6 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    connect()
     return render_template('index.html')
 
 
@@ -21,3 +20,4 @@ def next_page():
 
 if __name__ == '__main__':
     app.run(debug=True)
+    connect()
