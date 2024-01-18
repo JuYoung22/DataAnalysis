@@ -1,8 +1,12 @@
 from flask import Flask, render_template
+import psycopg2
+from psycopg2 import pool
 
 app = Flask(__name__)
 
+
 @app.route('/')
+
 def home():
     return render_template('index.html')
 
