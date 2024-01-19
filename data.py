@@ -12,7 +12,6 @@ import requests
 
 # env설정
 load_dotenv()
-
 def load_data_from_postgresql(result):
     # PostgreSQL 연결 정보
     db_params = {
@@ -35,24 +34,26 @@ def load_data_from_postgresql(result):
 
 # 데이터 크롤링
 def data_collection(start_date,end_date):
-    # 웹 가져오기
-    query = '데이터분석'
-    url = "https://search.naver.com/search.naver?where=news&query=" + query
-    web = requests.get(url).content
+    # 날짜 변환
+    start_date = start_date.replace("-", ".")
+    end_date = end_date.replace("-", ".")
+
+    # IT 일반 카테고리 페이지 URL
+    it_category_url = 'https://news.naver.com/main/list.naver?mode=LS2D&mid=shm&sid1=105&sid2=230'
+     # 웹 가져오기
+    web = requests.get(it_category_url).content
     source = BeautifulSoup(web, 'html.parser')
+    # 각 기사들의 데이터를 종류별로 나눠담을 리스트를 생성합니다. (추후 DataFrame으로 모을 예정)
+    urls_list = []
+    titles = []
+    dates = []
+    
+    for urls in source.find_all('a', {'class' : "nclicks(itn.2ndcont)"}):
+        if urls.attrs["href"].startswith("https://n.news.naver.com"):
+            urls_list.append(urls.attrs["href"])
 
-    # 네이버에서 "데이터분석"을 검색한 후 뉴스 탭의 1번째 페이지(위 url 변수의 URL에 해당)에 나타나 있는 뉴스들의 "제목"을 크롤링해주세요. 
-    # 텍스트만 뽑아내어 하나의 리스트로 모아 저장해주세요. (ex. 위 스크린샷에서 [인천테크노파크, 중소기업 빅데이터 지원사업 '우수' 등급])
 
-    news_subjects = source.find_all('a', {'class' : 'news_tit'}) # ResultSet (리스트와 유사한 형태)
-    news_date = source.find_all('span',{'data-date-time=': start_date})
-    subject_list = []
-    date_list = []
 
-    # for subject in news_subjects:
-    #     subject_list.append(subject.get_text())
-    for date in news_date:
-        date_list.append(date.get_text())
-    return date_list
+    return urls_list
 
 

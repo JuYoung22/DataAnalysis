@@ -16,16 +16,18 @@ def home():
     return render_template('index.html')
 
 
-@app.route('/next_page', methods=['POST'])
+@app.route('/next_page',methods=['GET','POST'])
 def next_page():
     # HTML 폼에서 입력받은 시작날짜와 종료날짜 값
     start_date = request.form['startDate']
     end_date = request.form['endDate']
-    print(start_date,end_date)
 
-    # 날짜 범위에 속하는 데이터 수집
+
+    # # 날짜 범위에 속하는 데이터 수집
     result = data_collection(start_date, end_date)
     print(result)
+
+
 
     # 수집한 데이터 PostgreSQL에 저장
     # if not result.empty:
