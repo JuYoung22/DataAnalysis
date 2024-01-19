@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/static/news.css">
+</head>
+<body style="margin: 0;">
+    <div 
+    style="background-color: #FFD639;
+    width: 100vw; height: 100vh;
+    display: flex;
+    justify-content: center; 
+    ">
+    <div class="div0">
+        <div class="div1">
+            <!-- 필터 입력 구간 3구역 나눠서-->
+            <!-- input: 시작 날짜, 종료 날짜, 언론사 이름 -->
+            <form method="post" action="/next_page">
+                <label for="startDate">시작 날짜:</label>
+                <input type="date" id="startDate" name="startDate" required>
+                <br>
+                <label for="endDate">종료 날짜:</label>
+                <input type="date" id="endDate" name="endDate" required>
+                <br>
+                <button type="submit">데이터 수집 및 저장</button>
+            </form>
+        </div>
+        <div class="div2">
+            <!-- 뉴스 불러오는 구간 -->
+            <h2>Pandas DataFrame</h2>
+            <div class="div3">
+                {{ table_html | safe }} 
+                <!-- {# safe 필터를 사용하여 HTML을 렌더링할 수 있도록 함 #} -->
+            </div>
+
+
+        </div>
+    </div>
+</body>
+</html>
